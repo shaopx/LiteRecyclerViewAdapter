@@ -68,12 +68,12 @@ class NotSimpleListActivity : AppCompatActivity() {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                        onError ={ Log.e("NotSimpleListActivity", "error", it) },
-                        onNext = {
-                            adapter.addData(it!!.subjects?.map {
-                               HotScreenData(it, R.layout.douban_hotscreen_item_layout,::HotScreenDataViewHolder)
-                            }!!)
-                        }
+                      onError ={ Log.e("NotSimpleListActivity", "error", it) },
+                      onNext = {
+                         adapter.addData(it!!.subjects?.map {
+                            HotScreenData(it, R.layout.douban_hotscreen_item_layout,::HotScreenDataViewHolder)
+                         }!!)
+                      }
                 )
     }
 }
