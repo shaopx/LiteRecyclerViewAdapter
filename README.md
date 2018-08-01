@@ -126,9 +126,9 @@ class HotScreenDataViewHolder : VH<HotScreenData> {
 
 #### 实现原理
 ------------
-```
-参见: https://www.jianshu.com/p/626f8c4d2411
-```
+
+参见: [实现说明](https://www.jianshu.com/p/626f8c4d2411)
+
 
 
 
