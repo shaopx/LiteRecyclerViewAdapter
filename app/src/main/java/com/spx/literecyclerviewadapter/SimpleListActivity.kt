@@ -45,21 +45,15 @@ class SimpleListActivity : AppCompatActivity() {
  */
 class StringData(var str: String,
                  layoutId: Int,
-                 funct: (view: View) -> VH<out Data>) : CommonData(layoutId, funct) {
-
-}
+                 funct: (view: View) -> VH<out Data>)
+    : CommonData(layoutId, funct)
 
 /**
  * define the view holder for StringData above
  */
-class StringDataViewHolder : VH<StringData> {
-    var simple_tv: TextView
-
-    constructor(itemView: View) : super(itemView) {
-        simple_tv = itemView.findViewById(R.id.simple_tv)
-    }
-
+class StringDataViewHolder(itemView: View) : VH<StringData>(itemView) {
     override fun bind(data: StringData, position: Int) {
+        var simple_tv: TextView =itemView?.findViewById(R.id.simple_tv)
         simple_tv.text = data.str
     }
 }

@@ -92,9 +92,8 @@ class NotSimpleListActivity : AppCompatActivity() {
  */
 class HotScreenData(var backdata: HotScreenResult.SubjectsBean,
                     layoutId: Int,
-                    funct: (view: View) -> VH<out Data>) : CommonData(layoutId, funct) {
-
-}
+                    funct: (view: View) -> VH<out Data>)
+    : CommonData(layoutId, funct)
 
 class HotScreenDataViewHolder : VH<HotScreenData> {
     var title: TextView? = null
