@@ -14,5 +14,5 @@ interface DouBanApi {
      * 获取正在上映的数据
      */
     @GET("v2/movie/in_theaters")
-    fun getHotScreenList(@QueryMap par: HashMap<String, String>): Observable<HotScreenResult>
+    fun getHotScreenList(@QueryMap par: Map<String, String>): Observable<HotScreenResult>
 }

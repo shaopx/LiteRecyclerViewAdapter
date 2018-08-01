@@ -24,11 +24,10 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_simple_list.*
 
 class NotSimpleListActivity : AppCompatActivity() {
-    lateinit var adapter: Adapter
+    private lateinit var adapter: Adapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_simple_list)
-
 
         setupRecyclerView(recyclerview)
 
@@ -58,13 +57,10 @@ class NotSimpleListActivity : AppCompatActivity() {
             return
         }
 
-        val parm = HashMap<String, String>()
-        parm.put("apikey", API_KEY)
-        parm.put("city", "北京")
-        parm.put("start", "0")
-        parm.put("count", "30")
-        parm.put("client", "")
-        parm.put("udid", "")
+        val parm = mapOf("apikey" to API_KEY,
+                "city" to "北京",
+                "start" to "0",
+                "count" to "30")
         ApiService.get()!!
                 .getHotScreenList(parm)
                 .subscribeOn(Schedulers.newThread())
@@ -100,21 +96,18 @@ class HotScreenDataViewHolder : VH<HotScreenData> {
     var dy: TextView? = null
     var actor: TextView? = null
     var watchNum: TextView? = null
-    var btn: Button? = null
     var rating: RatingBar? = null
     var image: ImageView? = null
 
     constructor(itemView: View) : super(itemView) {
         itemView.apply {
             title = findViewById(R.id.item_hot_screen_title)
+            image = findViewById(R.id.item_hot_screen_image)
+            rating = findViewById(R.id.item_hot_screen_rating)
             dy = findViewById(R.id.item_hot_screen_dy)
             actor = findViewById(R.id.item_hot_screen_actor)
             watchNum = findViewById(R.id.item_hot_screen_watch_num)
-            btn = findViewById(R.id.item_hot_screen_btn)
-            rating = findViewById(R.id.item_hot_screen_rating)
-            image = findViewById(R.id.item_hot_screen_image)
         }
-
     }
 
     override fun bind(data: HotScreenData, position: Int) {
