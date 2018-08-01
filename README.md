@@ -9,6 +9,9 @@
 ```
 
 2. 创建显示数据类
+
+假设这个例子中我们只需要在recyclerview的每个条目中显示一个字符串. 
+而且我们已经有了一个字符串列表.作为要显示的数据源.
 ```
 /**
  * define the wrapper data
@@ -40,4 +43,81 @@ StringData有三个参数, 分别是源数据实例, UI布局文件, 对应的vi
         adapter.addData(data.map {
             StringData(it, R.layout.simple_list_item_layout, ::StringDataViewHolder)
         })
+```
+
+#### 示例
+再看一个稍微复杂点的例子:
+```
+class NotSimpleListActivity : AppCompatActivity() {
+    private lateinit var adapter: Adapter
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_simple_list)
+
+        recyclerview.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        adapter = Adapter(this)
+        recyclerview.adapter = adapter
+
+        loadOnlineData()
+    }
+
+    private fun loadOnlineData() {
+
+        if (!hasNet(this)) {
+            Toast.makeText(this, "请先联网", LENGTH_LONG).show()
+            return
+        }
+
+        val parm = mapOf("apikey" to API_KEY,  "count" to "30")
+        ApiService.get()!!
+                .getHotScreenList(parm)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onError ={ Log.e("NotSimpleListActivity", "error", it) },
+                        onNext = {
+                            adapter.addData(it!!.subjects?.map {
+                                HotScreenData(it, R.layout.douban_hotscreen_item_layout, ::HotScreenDataViewHolder)
+                            }!!)
+                        }
+                )
+    }
+}
+
+/**
+ * define the wrapper data
+ */
+class HotScreenData(var backdata: HotScreenResult.SubjectsBean,
+                    layoutId: Int,
+                    funct: (view: View) -> VH<out Data>)
+    : CommonData(layoutId, funct)
+
+class HotScreenDataViewHolder : VH<HotScreenData> {
+    var title: TextView? = null
+    var dy: TextView? = null
+    var actor: TextView? = null
+    var watchNum: TextView? = null
+    var rating: RatingBar? = null
+    var image: ImageView? = null
+
+    constructor(itemView: View) : super(itemView) {
+        itemView.apply {
+            title = findViewById(R.id.item_hot_screen_title)
+            image = findViewById(R.id.item_hot_screen_image)
+            rating = findViewById(R.id.item_hot_screen_rating)
+            dy = findViewById(R.id.item_hot_screen_dy)
+            actor = findViewById(R.id.item_hot_screen_actor)
+            watchNum = findViewById(R.id.item_hot_screen_watch_num)
+        }
+    }
+
+    override fun bind(data: HotScreenData, position: Int) {
+        title?.text = data.backdata.title
+        Glide.with(itemView.context).load(data.backdata.images?.small).into(image!!)
+        rating?.rating = (data.backdata.rating?.average!! / 2).toFloat()
+        dy?.text = "导演：" + data.backdata.directors!![0].name
+        watchNum?.text = "${data.backdata.collect_count} 人看过"
+        actor?.text = "主演：" + data.backdata.casts!!.map { it.name }
+    }
+}
 ```
