@@ -118,7 +118,7 @@ class HotScreenDataViewHolder : VH<HotScreenData> {
 如上这些代码就能完整显示下面这个页面:
 ![豆瓣电影网络接口数据](https://github.com/shaopx/LiteRecyclerViewAdapter/blob/master/device-2018-08-01-190102.png)
 
-与前面介绍的不同的, 只是定义了新的数据类HotScreenData  和对应的 HotScreenDataViewHolder 
+与前面介绍的不同的, 只是定义了新的数据类HotScreenData  和对应的 HotScreenDataViewHolder   
 而显示相关的所有逻辑都集中在HotScreenDataViewHolder中, 这与android原始的使用方法是一致的.  
 而因为数据类和viewholder类集成在一起, 目的是高聚合, 方便检查代码. 
 
