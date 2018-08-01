@@ -116,7 +116,7 @@ class HotScreenDataViewHolder : VH<HotScreenData> {
 }
 ```
 如上这些代码就能完整显示下面这个页面:
-![豆瓣电影网络接口数据](http://...)
+![豆瓣电影网络接口数据](https://upload-images.jianshu.io/upload_images/7018022-79df8591d793956e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 与前面介绍的不同的, 只是定义了新的数据类HotScreenData  和对应的 HotScreenDataViewHolder
 而显示相关的所有逻辑都集中在HotScreenDataViewHolder中, 这与android原始的使用方法是一致的. 
